@@ -13,7 +13,7 @@ if(isset($_POST['register']))
 	$description="yet-to-update";
 	$relationship="yet-to-update";
 	
-	$posts=0;
+	$posts="no";
 
 	//echo "$email.$fname.$lname.$country.$password.$birthdate.$gender.$posts";
 	
