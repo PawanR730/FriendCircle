@@ -208,5 +208,51 @@ function get_posts(){
 
 	include("pagination.php");
 }
+function search_user(){ 
+		global $con; 
+		if (isset($_GET['search_user_btn1'])) { 
+			$search_query = htmlentities($_GET['search_user']); 
+			$get_user ="select * from Usertable where first_name like '%$search_query%' OR last_name like '%$search_query%'";
+			} 
+		else{ 
+			$get_user = "select * from Usertable";
+			}
+
+		$run_user = mysqli_query($con, $get_user); 
+		while ($row_user=mysqli_fetch_array($run_user)) {
+			$user_id = $row_user['user_id']; 
+			$f_name= $row_user['first_name'];
+			$l_name = $row_user['last_name']; 
+			//$username = $row['user_name']; 
+			$profile_pic = $row_user['profile_pic'];
+
+			echo"
+			<div class='row'> 
+				<div class='col-sm-3'> 
+				</div> 
+				<div class='col-sm-6'>
+				<div class='row' id='find_people'> 
+					<div class='col-sm-4'> 
+					<a href='user_profile.php?user_id=$user_id'> 
+					<img src='users/$profile_pic' width='150px' height='140px' title='$f_name' style='float:left; ,margin:1px;'/>
+					 </a> 
+					 </div><br><br> 
+					 <div class='col-sm--6'> 
+					 <a style='text-decoration:none;cursor:pointers;color:#3897f0;href='user_profile.php?user_id=$user_id'> 
+					 <strong><h2>$f_name $l_name</h2></strong> 
+					 </a>
+					</div>
+					<div class='col-sm-3'>
+					</div>
+				</div>
+			</div>
+			<div class='col-sm-4'>
+			</div>
+			</div><br>
+			";
+
+		} 
+
+	}
 
 ?>

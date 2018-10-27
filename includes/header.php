@@ -52,9 +52,9 @@ include("/opt/lampp/htdocs/FriendCircle/functions/functions.php");
 	        <li><a href='profile.php?<?php echo "user_id=$user_id" ?>'><?php echo "$fname"; ?></a></li>
 	       	<li><a href="home.php">Home</a></li>
 			<li><a href="members.php">Find People</a></li>
-			<li><a href="messages.php?u_id=new">Messages</a></li>
+			<li><a href="messages.php?u_id=new">Messages</a></li>         
 
-
+<!-- //hxhhhx -->
 					<?php
 						echo"
 
@@ -65,7 +65,7 @@ include("/opt/lampp/htdocs/FriendCircle/functions/functions.php");
 									<a href='my_post.php?user_id=$user_id'>My Posts <span class='badge badge-secondary'>$posts</span></a>
 								</li>
 								<li>
-									<a href='edit_profile.php?user_id=$user_id'>Edit Account</a>
+									<a href='edit-profile.php?user_id=$user_id'>Edit Account</a>
 								</li>
 								<li role='separator' class='divider'></li>
 								<li>
