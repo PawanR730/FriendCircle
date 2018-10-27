@@ -14,6 +14,13 @@ if(isset($_POST['register']))
 	$relationship="yet-to-update";
 	
 	$posts="no";
+	if($gender=='Male')
+	$profile_pic='male.png';
+    else 
+    {
+    	$profile_pic='female.png';
+    }
+    $cover_pic='sea.jpeg';
 
 	//echo "$email.$fname.$lname.$country.$password.$birthdate.$gender.$posts";
 	
@@ -40,7 +47,7 @@ if(isset($_POST['register']))
     	exit(0);
 
     }
-    $insert="insert into Usertable(first_name,last_name,country,relationship,description,birth_date,posts,password,email,gender) values ('$fname','$lname','$country','$relationship','$description','$birthdate','$posts','$password','$email','$gender')";
+    $insert="insert into Usertable(first_name,last_name,country,relationship,description,birth_date,posts,password,email,gender,profile_pic,cover_pic) values ('$fname','$lname','$country','$relationship','$description','$birthdate','$posts','$password','$email','$gender','$profile_pic','$cover_pic')";
 
     $insert_query=mysqli_query($con,$insert);
     

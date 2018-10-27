@@ -18,6 +18,7 @@ include("includes/connection.php");
 			echo "<script>window.open('home.php', '_self')</script>";
 			exit(0);
 		}else{
+			echo "<script>window.open('login-form.php', '_self')</script>";
 			echo"<script>alert('Your Email or Password is incorrect')</script>";
 		}
 	}
