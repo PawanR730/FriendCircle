@@ -97,7 +97,7 @@ if(!isset($_SESSION['user_email'])){
 
 				$u_cover = $_FILES['u_cover']['name'];
 				$image_tmp = $_FILES['u_cover']['tmp_name'];
-				$random_number = rand(1,100);
+				$random_number = rand(1,10000);
 
 				if($u_cover==''){
 					echo "<script>alert('Please Select Cover Image')</script>";
@@ -126,11 +126,11 @@ if(!isset($_SESSION['user_email'])){
 
 				$u_image = $_FILES['u_image']['name'];
 				$image_tmp = $_FILES['u_image']['tmp_name'];
-				$random_number = rand(1,100);
+				$random_number = rand(1,10000);
 
 				if($u_image==''){
 					echo "<script>alert('Please Select Profile Image on clicking on your profile image')</script>";
-					echo "<script>window.open('profile.php?u_id=$user_id' , '_self')</script>";
+					echo "<script>window.open('profile.php?user_id=$user_id' , '_self')</script>";
 					exit();
 				}else{
 					move_uploaded_file($image_tmp, "users/$u_image.$random_number");
