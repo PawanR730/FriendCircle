@@ -3,7 +3,13 @@ session_start();
 
 include("includes/connection.php");
 
+
+// echo "ddddcdccc";
+// exit(0);
+
+
 	if (isset($_POST['login'])) {
+		
 
 		$email = htmlentities(mysqli_real_escape_string($con, $_POST['email']));
 		$password = htmlentities(mysqli_real_escape_string($con, $_POST['password']));
@@ -18,8 +24,9 @@ include("includes/connection.php");
 			echo "<script>window.open('home.php', '_self')</script>";
 			exit(0);
 		}else{
-			echo "<script>window.open('login-form.php', '_self')</script>";
 			echo"<script>alert('Your Email or Password is incorrect')</script>";
+			echo "<script>window.open('login-form.php', '_self')</script>";
+			
 		}
 	}
 ?>

@@ -60,7 +60,7 @@
 				<h3 style="text-align: center;"><strong>Login to Friend Circle-A Social Media App</strong></h3>
 			</div>
 			<div class="l-part">
-				<form action="login.php" method="post">
+				<form action="login.php" method="post" >
 					<input type="email" name="email" placeholder="Email" required="required" class="form-control input-md"><br>
 					<div class="overlap-text">
 						<input type="password" name="password" placeholder="Password" required="required" class="form-control input-md"><br>

@@ -1,3 +1,4 @@
+
 <style>
 .pagination a{
 	color: black;
@@ -9,8 +10,9 @@
 .pagination a:hover:not(.active){background-color: #ddd;}
 </style>
 <?php
-	
-	$query = "select * from posttable";
+	global $user_id;
+	// $query = "select * from posttable";
+     $query="select * from posttable where user_id in (select user2_id from friendship where user1_id='$user_id' ) or user_id='$user_id'";
 
 	$result = mysqli_query($con, $query);
 

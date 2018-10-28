@@ -1,3 +1,3 @@
 <?php
-</h2>Dimag kharab ho gya ab ton</h2>
+echo "Dimag kharab ho gya ab ton";
 ?>
