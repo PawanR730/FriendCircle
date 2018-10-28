@@ -52,7 +52,8 @@ include("/opt/lampp/htdocs/FriendCircle/functions/functions.php");
 	        <li><a href='profile.php?<?php echo "user_id=$user_id" ?>'><?php echo "$fname"; ?></a></li>
 	       	<li><a href="home.php">Home</a></li>
 			<li><a href="members.php">Find People</a></li>
-			<li><a href="messages.php?u_id=new">Messages</a></li>         
+			<li><a href="messages.php?u_id=new">Messages</a></li>   
+			<li><a href="requests.php">Friend Requests</a></li>      
 
 <!-- //hxhhhx -->
 					<?php

@@ -43,7 +43,7 @@ if(isset($_POST['register']))
     if($check==1)
     {
     	echo "<script>alert('Email already Exists')</script>";
-    	echo "<script>window.open('register.php','_self')</script>";
+    	echo "<script>window.open('register-form.php','_self')</script>";
     	exit(0);
 
     }

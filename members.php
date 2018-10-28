@@ -33,7 +33,16 @@ if(!isset($_SESSION['user_email'])){
 	 		 <div class="col-sm-4">
 	 		 </div>
 		</div> <br><br>
-		<?php search_user(); ?>
+		<?php 
+  ////passing variables in the functions
+         $email = $_SESSION['user_email'];
+		$get_user = "select * from Usertable where email='$email'";  // Running query by emailid
+		$run_user = mysqli_query($con,$get_user);
+		$row = mysqli_fetch_array($run_user);
+					
+			$user_id = $row['user_id']; 
+        
+		search_user($user_id); ?>
 	</div> 
 </div>
 </body>
