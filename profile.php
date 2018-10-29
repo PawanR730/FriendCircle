@@ -2,7 +2,6 @@
 <?php
 session_start();
 include("includes/header.php");
-
 if(!isset($_SESSION['user_email'])){
 	header("location: main.php");
 }
@@ -50,6 +49,14 @@ if(!isset($_SESSION['user_email'])){
 		cursor: pointer;
 		transform: translate(-50%, -50%);
 	}
+	#own_posts{
+		border: 5px solid#e6e6e6;
+		padding: 40px 50px;
+	}
+	#post_img{
+		height: 300px;
+		width: 100%;
+	}
 </style>
 <body>
 <div class="row">
@@ -61,7 +68,6 @@ if(!isset($_SESSION['user_email'])){
 			<div>
 				<div><img id='cover-img' class='img-rounded' src='cover/$cover_pic' alt='cover'></div>
 				<form action='profile.php?user_id=$user_id' method='post' enctype='multipart/form-data'>
-
 				<ul class='nav pull-left' style='position:absolute;top:10px;left:40px;'>
 					<li class='dropdown'>
 						<button class='dropdown-toggle btn btn-default' data-toggle='dropdown'>Change Cover</button>
@@ -76,13 +82,11 @@ if(!isset($_SESSION['user_email'])){
 						</div>
 					</li>
 				</ul>
-
 				</form>
 			</div>
 			<div id='profile-img'>
 				<img src='users/$profile_pic' alt='Profile' class='img-circle' width='180px' height='185px'>
 				<form action='profile.php?u_id='$user_id' method='post' enctype='multipart/form-data'>
-
 				<label id='update_profile'> Select Profile
 				<input type='file' name='u_image' size='60' />
 				</label><br><br>
@@ -92,13 +96,10 @@ if(!isset($_SESSION['user_email'])){
 			";
 		?>
 		<?php
-
 			if(isset($_POST['submit'])){
-
 				$u_cover = $_FILES['u_cover']['name'];
 				$image_tmp = $_FILES['u_cover']['tmp_name'];
 				$random_number = rand(1,10000);
-
 				if($u_cover==''){
 					echo "<script>alert('Please Select Cover Image')</script>";
 					echo "<script>window.open('profile.php?u_id=$user_id' , '_self')</script>";
@@ -106,28 +107,22 @@ if(!isset($_SESSION['user_email'])){
 				}else{
 					move_uploaded_file($image_tmp, "cover/$u_cover.$random_number");
 					$update = "update Usertable set cover_pic='$u_cover.$random_number' where user_id='$user_id'";
-
 					$run = mysqli_query($con, $update);
-
 					if($run){
 					echo "<script>alert('Your Cover Updated')</script>";
 					echo "<script>window.open('profile.php?u_id=$user_id' , '_self')</script>";
 					}
 				}
-
 			}
-
 		?>
 	</div>
 
 
 	<?php
 		if(isset($_POST['update'])){
-
 				$u_image = $_FILES['u_image']['name'];
 				$image_tmp = $_FILES['u_image']['tmp_name'];
 				$random_number = rand(1,10000);
-
 				if($u_image==''){
 					echo "<script>alert('Please Select Profile Image on clicking on your profile image')</script>";
 					echo "<script>window.open('profile.php?user_id=$user_id' , '_self')</script>";
@@ -135,15 +130,12 @@ if(!isset($_SESSION['user_email'])){
 				}else{
 					move_uploaded_file($image_tmp, "users/$u_image.$random_number");
 					$update = "update Usertable set profile_pic='$u_image.$random_number' where user_id='$user_id'";
-
 					$run = mysqli_query($con, $update);
-
 					if($run){
 					echo "<script>alert('Your Profile Updated')</script>";
 					echo "<script>window.open('profile.php?u_id=$user_id' , '_self')</script>";
 					}
 				}
-
 			}
 	?>
 	<div class="col-sm-2">
@@ -155,6 +147,7 @@ if(!isset($_SESSION['user_email'])){
 	<div class="col-sm-2" style="background-color: #e6e6e6;text-align: center;left: 0.9%;border-radius: 5px;">
 		<?php
 		echo"
+			
 			<center><h2><strong>About</strong></h2></center>
 			<center><h4><strong>$fname $lname</strong></h4></center>
 			<p><strong><i style='color:grey;'>$description</i></strong></p><br>
@@ -163,9 +156,148 @@ if(!isset($_SESSION['user_email'])){
 			<p><strong>Member Since: </strong> $date_registered</p><br>
 			<p><strong>Gender: </strong> $gender</p><br>
 			<p><strong>Date of Birth: </strong> $birthday</p><br>
-		";
+			"
 		?>
 	</div>
+	<div class="col-sm-6"> 
+		<!-- display user posts --> 
+		<?php
+		
+		if (isset($_GET['user_id'])){
+			global $con; 
+			$u_id = $_GET['user_id']; 
+		
+		$get_posts = "select * from posttable where user_id='$u_id' ORDER by post_date DESC"; 
+		$run_posts = mysqli_query($con, $get_posts); 
+		while ($row_posts = mysqli_fetch_array($run_posts)){
+			$post_id = $row_posts['post_id'];
+			$user_id = $row_posts['user_id']; 
+			$content = $row_posts['post_content'];
+			$upload_image = $row_posts['upload_image'];
+			$post_date = $row_posts['post_date'];
+			$user = "select * from Usertable where user_id='$user_id' AND posts='yes'"; 
+			$run_user = mysqli_query($con, $user);
+			$row_user = mysqli_fetch_array($run_user);
+			$user_name = $row_user['first_name'];
+			$user_image = $row_user['profile_pic']; 
+			//display the posts 
+			if($content == "No" && strlen($upload_image) >= 1){ 
+				echo"
+				<div id='own_posts'>
+					<div class='row'>
+						<div class='col-sm-2'> 
+							<p><img src='users/$user_image' class='img-circle' width='100px' height='100px'></p> 
+						</div>
+						<div class='col-sm-6'>
+							<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' 
+								href='user_profile.php?user_id=$user_id'>$user_name</a></h3>
+							<h4><small style='color:black;'>Updated a post on <strong>$post_date</
+								strong></small></h4> 
+						</div>
+						<div class='col-sm-4'>
+						</div>
+					</div> 
+					<div class='row'>
+						<div class='col-sm-12'>
+							<p>$content</p>
+							<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+						</div>
+					</div>
+					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-success'>View</button>
+					</a>
+					<a href='edit_post.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Edit</button></a>
+					<a href = 'functions/delete_post.php?post_id=$post_id' style='float:right;'>
+						<button class='btn btn-danger'>Delete</button></a>
+				</div><br><br>
+				";
+			} 
+			else if (strlen($content) >=1 && strlen($upload_image) >= 1){ 
+				echo"
+				<div id='own_posts'>
+					<div class='row'>
+						<div class='col-sm-2'> 
+							<p><img src='users/$user_image' class='img-circle' width='100px' height='100px'></p> 
+						</div>
+						<div class='col-sm-6'>
+							<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' 
+								href='user_profile.php?user_id=$user_id'>$user_name</a></h3>
+							<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4> 
+						</div>
+						<div class='col-sm-4'>
+						</div>
+					</div> 
+					<div class='row'>
+						<div class='col-sm-12'>
+						<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+						</div>
+					</div><br>
+					<div class='col-sm-6'>
+						</div>
+					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-success'>View</button>
+					</a>
+					<a href='edit_post.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Edit</button></a>
+					<a href = 'functions/delete_post.php?post_id=$post_id' style='float:right;'>
+						<button class='btn btn-danger'>Delete</button></a>
+				</div><br><br>
+				";
+			}
+			else{ 
+				echo"
+				<div id='own_posts'>
+					<div class='row'>
+						<div class='col-sm-2'> 
+							<p><img src='users/$user_image' class='img-circle' width='100px' height='100px'></p> 
+						</div>
+						<div class='col-sm-6'>
+							<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' 
+								href='user_profile.php?user_id=$user_id'>$user_name</a></h3>
+							<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4> 
+						</div>
+						<div class='col-sm-4'>
+						</div>
+					</div> 
+					<div class='row'>
+						<div class='col-sm-2'>
+						</div>
+						<div class='col-sm-6'>
+							<h3><p>$content</p></h3>
+						</div>
+						<div class='col-sm-4'>
+						</div>
+					</div>
+				";
+				//global $con;
+				// if (isset($_GET['user_id'])){ 
+				// 	$user_id = $_GET['user_id'];
+				// }
+				$getposts = "select * from Usertable where user_id='$user_id'";
+				$run_user = mysqli_query($con, $getposts);
+				$row = mysqli_fetch_array($run_user); 
+				$user_email = $row['email'];
+				$user = $_SESSION['user_email'];
+				// $get_user = "select * from Usertable where email='$user'";
+				// $run_user = mysqli_query($con, $get_user); 
+				// $row = mysqli_fetch_array($run_user);
+				// $user_id = $row['user_id'];
+				// $u_email = $row['email']; 
+				if($user != $user_email){
+					echo "<script>window.open('profile.php?user_id=$user_id', '_self')</script>"; 
+				} 
+				else{
+					echo"
+					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-success'>View</button>
+					</a>
+					<a href='edit_post.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Edit</button></a>
+					<a href = 'functions/delete_post.php?post_id=$post_id' style='float:right;'>
+						<button class='btn btn-danger'>Delete</button></a>
+					</div><br><br><br> 
+					";
+				}
+		}
+	}
+}
+		?>
+	</div> 
 </div>
 </body>
 </html>

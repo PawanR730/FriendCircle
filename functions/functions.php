@@ -30,9 +30,14 @@ function search_user($profile_id){
             $run_find_query=mysqli_query($con,$find_query);
             $check=mysqli_num_rows($run_find_query);
 
-            if($check==0)
+            $find_pending="select * from friendrequests where user_from='$profile_id' and user_to='$user_id' and status='pending'";
+            $run_find_pending=mysqli_query($con,$find_pending);
+            $check2=mysqli_num_rows($run_find_pending);
+
+
+            if($check2==1)
             {
-			echo"
+                echo"
 			<div class='row'> 
 				<div class='col-sm-3'> 
 				</div> 
@@ -50,6 +55,36 @@ function search_user($profile_id){
 					 <div class='col-sm--6'>
 					 <a style='text-decoration:none;cursor:pointers;color:#3897f0;' href='friend_request.php?user_id=$user_id'>
 					 <strong><h2>Send Friend Request</h2></strong></a>
+					 </div>
+					</div>
+					<div class='col-sm-3'>
+					</div>
+				</div>
+			</div>
+			<div class='col-sm-4'>
+			</div>
+			</div><br>
+			";
+            }
+           else if($check==0)
+            {
+			echo"
+			<div class='row'> 
+				<div class='col-sm-3'> 
+				</div> 
+				<div class='col-sm-6'>
+				<div class='row' id='find_people'> 
+					<div class='col-sm-4'> 
+					<a href='user_profile.php?user_id=$user_id'> 
+					<img src='users/$profile_pic' width='150px' height='140px' title='$f_name' style='float:left; ,margin:1px;'/>
+					 </a> 
+					 </div><br><br> 
+					 <div class='col-sm--6'> 
+					 <a style='text-decoration:none;cursor:pointers;color:#3897f0;'href='user_profile.php?user_id=$user_id'> 
+					 <strong><h2>$f_name $l_name</h2></strong> 
+					 </a>
+					 <div class='col-sm--6'>
+					  <h2 style='text-decoration:none;cursor:pointers;color:#3897f0;'>Friend Request Pending</h2></strong>
 					 </div>
 					</div>
 					<div class='col-sm-3'>
@@ -423,7 +458,7 @@ function single_post(){
 							<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
 						</div>
 					</div><br>
-					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>
+					<br>
 					</div>
 					<div class='col-sm-3'>
 					</div>
@@ -453,7 +488,7 @@ function single_post(){
 							<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
 						</div>
 					</div><br>
-					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>
+					 <br>
 					</div>
 					<div class='col-sm-3'>
 					</div>
@@ -482,7 +517,7 @@ function single_post(){
 						<h3><p>$content</p></h3>
 					</div>
 				</div><br>
-				<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>
+				
 				</div>
 				<div class='col-sm-3'>
 				</div>
@@ -522,5 +557,128 @@ function single_post(){
 		}	
 	}
 }	
+
+
+function results(){
+	global $con;
+
+	if(isset($_GET['search'])){
+		$search_query=htmlentities($_GET['user_query']);
+	}
+
+	$get_posts="select * from posttable where post_content like '%$search_query%' OR upload_image like '%$search_query%'";
+
+	$run_posts=mysqli_query($con,$get_posts);
+
+	while ($row_posts=mysqli_fetch_array($run_posts)) {
+		$post_id=$row_posts['post_id'];
+		$user_id=$row_posts['user_id'];
+		$post_content=$row_posts['post_content'];
+		$upload_image=$row_posts['upload_image'];
+		$post_date=$row_posts['post_date'];
+
+		$user="select * from Usertable where user_id='$user_id' AND posts='yes'";
+
+		$run_user=mysqli_query($con,$user);
+		$row_user=mysqli_fetch_array($run_user);
+
+		$user_name=$row_user['user_name'];
+		$first_name=$row_user['first_name'];
+		$last_name=$row_user['last_name'];
+		$user_image=$row_user['profile_pic'];
+
+		// displaying posts
+
+		if($content=="No" && strlen($upload_image) >= 1){
+			echo"
+			<div class='row'>
+			<div class='col-sm-3'>
+			</div>
+				<div id='posts' class='col-sm-6'>
+				<div class='row'>
+			<div class='col-sm-2'>
+			<p><img src='users/$user_image' class='img-circle' width='100px' height='100px'></p>
+			</div>
+			<div class='col-sm-6'>
+				<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' 
+				href='user_profile.php?u_id=$user_id'>$first_name</a></h3>
+					<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
+			</div>
+			<div class='col-sm-4'>
+			</div>
+			</div>
+			<div class='row'>
+				<div class='col-sm-12'>
+					<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+				</div>
+			</div><br>
+			<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>
+			</div>
+			<div class='col-sm-3'>
+			</div>
+			</div><br><br>
+			";
+    	}
+		else if(strlen($content) >= 1 && strlen($upload_image) >= 1){
+			echo"
+			<div class='row'>
+			<div class='col-sm-3'>
+			</div>
+			<div id='posts' class='col-sm-6'>
+				<div class='row'>
+					<div class='col-sm-2'>
+					<p><img src='users/$user_image' class='img-circle' width='100px' height='100px'></p>
+					</div>
+					<div class='col-sm-6'>
+						<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?user_id=$user_id'>$user_name</a></h3>
+						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
+					</div>
+					<div class='col-sm-4'>
+					</div>
+					</div>
+				<div class='row'>
+				<div class='col-sm-12'>
+					<p>$content</p>
+					<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+				</div>
+			</div><br>
+			<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>
+			</div>
+			<div class='col-sm-3'>
+			</div>
+			</div><br><br>
+			";
+		}
+		else{
+			echo"
+			<div class='row'>
+			<div class='col-sm-3'>
+			</div>
+			<div id='posts' class='col-sm-6'>
+				<div class='row'>
+				<div class='col-sm-2'>
+				<p><img src='users/$user_image' class='img-circle' width='100px' height='100px'></p>
+				</div>
+				<div class='col-sm-6'>
+					<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?user_id=$user_id'>$user_name</a></h3>
+						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
+				</div>
+				<div class='col-sm-4'>
+				</div>
+			</div>
+			<div class='row'>
+				<div class='col-sm-12'>
+					<h3><p>$content</p></h3>
+				</div>
+			</div><br>
+			<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>
+			</div>
+			<div class='col-sm-3'>
+			</div>
+			</div><br><br>
+			"; 
+		}//end of else
+	}
+}
 
 ?>

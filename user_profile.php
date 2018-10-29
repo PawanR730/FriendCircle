@@ -24,8 +24,11 @@ if(!isset($_SESSION['user_email'])){
 	width: 90%;
 }	
 #posts_img{
-	height: 300px;
-	width: 100%;
+	height: 100px;
+	width: 100px;
+	border: 5px solid #e6e6e6;
+	padding: 40px 50px;
+	
 }
 </style>
 <body>
@@ -46,7 +49,7 @@ if(!isset($_SESSION['user_email'])){
 			$select= "select * from Usertable where user_id='$user_id'";
 			$run=mysqli_query($con,$select);
 			$row=mysqli_fetch_array($run);
-			$name = $row['user_name'];
+			$name = $row['first_name'];
 
 		}
 		?>
@@ -55,7 +58,7 @@ if(!isset($_SESSION['user_email'])){
 			if(isset($_GET['user_id'])){
 				global $con;
 
-				$user_id = $GET['user_id'];
+				$user_id = $_GET['user_id'];
 
 				$select = "select * from Usertable where user_id='$user_id'";
 				$run=mysqli_query($con,$select);
@@ -69,7 +72,7 @@ if(!isset($_SESSION['user_email'])){
 				$description = $row['description'];
 				$country = $row['country'];
 				$gender = $row['gender'];
-				$date_regisered= $row['date_regisered'];
+				$date_registered= $row['date_registered'];
 
 				echo"
 					<div class='row'>
@@ -93,14 +96,14 @@ if(!isset($_SESSION['user_email'])){
 						</ul>
 				";
 				$email = $_SESSION['user_email'];
-				$get_user ="select * from users where user_email='$email'";
+				$get_user ="select * from Usertable where email='$email'";
 				$run_user = mysqli_query($con,$get_user);
 				$row = mysqli_fetch_array($run_user);
 
 				$userown_id = $row['user_id'];
 
 				if($user_id == $userown_id){
-					echo"<a href='edit_profile.php?u_id=$userown_id class='btn btn-success'/>Edit Profile</a><br><br><br>";
+					echo"<a href='edit_profile.php?user_id=$userown_id' class='btn btn-success'/>Edit Profile</a><br><br><br>";
 				}
 				echo"
 					</div>
@@ -109,18 +112,21 @@ if(!isset($_SESSION['user_email'])){
 			}
 		?>
 		<div class="col-sm-8"> 
-			<center><h1><strong><?php echo "$f_name $l_name"; ?></strong> Posts</h1></center>
+			<center><h1><strong><?php echo "$first_name $last_name"; ?></strong> Posts</h1></center>
 			<?php 
-				global $con; 
-				if( isset ( $_GET['user_id'] )
-					{ $user_id = $_GET['user_id'];}
+				
+				if( isset ( $_GET['user_id'] ))
+
+					{ 
+						global $con; 
+						$user_id = $_GET['user_id'];
 					
 
 			$get_posts = "select * from posttable where user_id='$user_id' ORDER by post_date DESC "; 
 			$run_posts = mysqli_query($con, $get_posts); 
 			while($row_posts = mysqli_fetch_array($run_posts)){ 
 				$post_id = $row_posts[ 'post_id' ]; 
-				$user_id = $row_postst 'user_id' ];
+				$user_id = $row_posts['user_id' ];
 
 
 				$content = $row_posts['post_content']; 
@@ -134,7 +140,7 @@ if(!isset($_SESSION['user_email'])){
 
 				
 				$first_name = $row_user['first_name']; 
-				$1ast_name = $row_user['last_name']; 
+				$last_name = $row_user['last_name']; 
 				$profile_pic = $row_user['profile_pic']; 
 
 			if($content=="No" && strlen($upload_image) >= 1){ 
@@ -155,11 +161,12 @@ if(!isset($_SESSION['user_email'])){
 							</div>
 							<div class='row'> 
 								<div class='col-sm-12'> 
-									<img id='posts-img' src=' imagepost/$upload_image' style='height: 350px'> 
+									<img id='posts-img' src=' imagepost/$upload_image' style='height: 200px ;'> 
 									</div> 
 								</div><br> 
-								<a href='single.php?post_id' style='float: right;'><button class='btn btn-success'>View</ button></a> 
-								<a href='functions/delete_post.php?post_id=$post_id' style='floot:right;'><button class='btn btn-danger'> Delete</button></a> 
+								<a href='single.php?post_id=$post_id' style='float: right;'><button class='btn btn-success'>View</ button></a> 
+								<a href='single.php?post_id=$post_id ' style='float:right';><button class='btn btn-info'>Comment</button></a><br>
+								
 							</div><br/><br/>
 				"; 
 
@@ -173,7 +180,7 @@ if(!isset($_SESSION['user_email'])){
 							 </div> 
 							 <div class='col-sm-6'>
 							 	<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?user_id=$user_id'>$first_name</a></h3> 
-							 	<h4><small style='color:black;'>Updated a post on <strong>$ post_date</strong></small></h4>
+							 	<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
 							 </div> 
 							<div class='col-sm-4'>
 							</div>
@@ -181,11 +188,13 @@ if(!isset($_SESSION['user_email'])){
 						<div class='row'> 
 							<div class='col-sm-12'> 
 								<p>$content</p>
-								<img id='posts-img' src='imagepost/$upload_image' style='height:350px;'>
+								<img id='posts-img' src='imagepost/$upload_image' >
 
 							</div>
 						</div><br>
-						<a href='single.pDelete</button></a?
+						<a href='single.php?post_id=$post_id' style='float: right;'><button class='btn btn-success'>View</ button></a>
+						<a href='single.php?post_id=$post_id ' style='float:right';><button class='btn btn-info'>Comment</button></a><br> 
+								
 					</div><br><br>
 
 				";
@@ -209,10 +218,14 @@ if(!isset($_SESSION['user_email'])){
 								<h3><p>$content</p></h3> 
 							</div> 
 							</div><br>
-							<a href='single.php?post_id='$post_id ' style='float:right';'><button class='btn btn-info'>Comment</button></a><br>
+							<a href='single.php?post_id=$post_id' style='float: right;'><button class='btn btn-success'>View</ button></a> 
+							<a href='single.php?post_id=$post_id ' style='float:right';><button class='btn btn-info'>Comment</button></a><br>
+							
+
 					</div><br><br>
 				";
 			}
+		}
 		} 
 
 			
@@ -220,6 +233,5 @@ if(!isset($_SESSION['user_email'])){
 	</div>
 	</div>
 </div>
-<?php} ?>
 </body>
 </html>
