@@ -35,7 +35,7 @@ function search_user($profile_id){
             $check2=mysqli_num_rows($run_find_pending);
 
 
-            if($check2==1)
+            if($check2==0&&$check==0)
             {
                 echo"
 			<div class='row'> 
@@ -66,7 +66,7 @@ function search_user($profile_id){
 			</div><br>
 			";
             }
-           else if($check==0)
+           else if($check==0&&$check2==1)
             {
 			echo"
 			<div class='row'> 
@@ -221,7 +221,7 @@ function get_posts(){
 
 	$start_from = ($page-1) * $per_page;
 	
-	echo $user_id;
+	//echo $user_id;
 	 
  /////////Getting posts from our friends onlt
 	// $get_posts = "select * from posttable  ORDER by post_date DESC LIMIT $start_from, $per_page";
@@ -560,11 +560,12 @@ function single_post(){
 
 
 function results(){
-	global $con;
+	
 
 	if(isset($_GET['search'])){
+		global $con;
 		$search_query=htmlentities($_GET['user_query']);
-	}
+
 
 	$get_posts="select * from posttable where post_content like '%$search_query%' OR upload_image like '%$search_query%'";
 
@@ -573,7 +574,7 @@ function results(){
 	while ($row_posts=mysqli_fetch_array($run_posts)) {
 		$post_id=$row_posts['post_id'];
 		$user_id=$row_posts['user_id'];
-		$post_content=$row_posts['post_content'];
+		$content=$row_posts['post_content'];
 		$upload_image=$row_posts['upload_image'];
 		$post_date=$row_posts['post_date'];
 
@@ -582,7 +583,7 @@ function results(){
 		$run_user=mysqli_query($con,$user);
 		$row_user=mysqli_fetch_array($run_user);
 
-		$user_name=$row_user['user_name'];
+		// $user_name=$row_user['user_name'];
 		$first_name=$row_user['first_name'];
 		$last_name=$row_user['last_name'];
 		$user_image=$row_user['profile_pic'];
@@ -630,7 +631,7 @@ function results(){
 					<p><img src='users/$user_image' class='img-circle' width='100px' height='100px'></p>
 					</div>
 					<div class='col-sm-6'>
-						<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?user_id=$user_id'>$user_name</a></h3>
+						<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?user_id=$user_id'>$first_name</a></h3>
 						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
 					</div>
 					<div class='col-sm-4'>
@@ -660,7 +661,7 @@ function results(){
 				<p><img src='users/$user_image' class='img-circle' width='100px' height='100px'></p>
 				</div>
 				<div class='col-sm-6'>
-					<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?user_id=$user_id'>$user_name</a></h3>
+					<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?user_id=$user_id'>$first_name</a></h3>
 						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
 				</div>
 				<div class='col-sm-4'>
@@ -679,6 +680,7 @@ function results(){
 			"; 
 		}//end of else
 	}
+}
 }
 
 ?>

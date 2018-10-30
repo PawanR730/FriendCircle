@@ -13,6 +13,7 @@ include("includes/connection.php");
 
 		$email = htmlentities(mysqli_real_escape_string($con, $_POST['email']));
 		$password = htmlentities(mysqli_real_escape_string($con, $_POST['password']));
+		$password=md5($password);
 
 		$select_user = "select * from Usertable where email='$email' AND password='$password' ";
 		$query= mysqli_query($con, $select_user);

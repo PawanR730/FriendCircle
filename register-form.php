@@ -63,8 +63,8 @@
 						<input id="password" type="password" class="form-control" placeholder="password" name="password" required="required">
 					</div><br>
 					<div class="input-group">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-						<input id="email" type="password" class="form-control" placeholder="confirm password" name="password1" required="required">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+						<input id="password" type="password" class="form-control" placeholder="confirm password" name="password1" required="required">
 					</div><br>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>

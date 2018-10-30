@@ -88,8 +88,18 @@ if(!isset($_SESSION['user_email'])){
 ?>	
 	<div class="col-sm-3" id="select_user">
 		<?php
-			//global $con;
-			$user="select * from Usertable";
+			global $con;
+			
+			$user=$_SESSION['user_email'];
+	$get_user="select * from Usertable where email='$user'";
+	$run_user=mysqli_query($con,$get_user);
+	
+	$row=mysqli_fetch_array($run_user);
+	$user_from_msg=$row['user_id'];
+	$user="select * from Usertable where user_id in (select user2_id from friendship where user1_id='$user_from_msg' )";
+
+		
+			//$user="select * from Usertable ";
 
 			$run_user=mysqli_query($con,$user);
 			while($row_user=mysqli_fetch_array($run_user)){
@@ -147,16 +157,14 @@ if(!isset($_SESSION['user_email'])){
 						<form action='' method='POST'>
 							<center><h3> Select Someone to start conversation</h3>
 							</center>
-							<textarea class='form-control' placeholder='Enter Your message'>
-							</textarea> 
+							<textarea class='form-control' placeholder='Enter Your message'></textarea> 
 							<input type='submit' class='btn btn-default'  disabled value='Send'>
 						</form><br><br>
 					";
 				}
 				else{
 					echo "<form action='' method='POST'>
-							<textarea class='form-control' value='' placeholder='EnterYour message' name='msg_box' id='message_textarea'>
-							</textarea> 
+							<textarea class='form-control' value='' placeholder='Enter Your message' name='msg_box' id='message_textarea'></textarea> 
 							<input type='submit' name='send_message' id='btn-msg' value='Send'>
 						</form><br><br>
 						";
@@ -166,11 +174,11 @@ if(!isset($_SESSION['user_email'])){
 		<?php
 			if(isset($_POST['send_message'])){
 				$msg=htmlentities($_POST['msg_box']);
-				if(strlen($msg)<8){
+				if(strlen($msg)<=0){
 					echo"<h4 style='color:red;text-align:center;'>Empty Message NOT SENT!></h4>";
 				}
-				else if(strlen($msg)>57){
-					echo"<h4 style='color:red;text-aligin:center;'>Message is too long ! use only 50 characters</h4>";
+				else if(strlen($msg)>255){
+					echo"<h4 style='color:red;text-aligin:center;'>Message is too long ! use only 255 characters</h4>";
 				}
 				else{
 					

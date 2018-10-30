@@ -12,6 +12,8 @@ if(isset($_POST['register']))
 	$gender=htmlentities(mysqli_real_escape_string($con,$_POST['gender']));
 	$description="yet-to-update";
 	$relationship="yet-to-update";
+	$password=md5($password);
+	$password1=md5($password1);
 	
 	$posts="no";
 	if($gender=='Male')
@@ -28,7 +30,7 @@ if(isset($_POST['register']))
     if(strcmp($password,$password1)>0||strcmp($password, $password1)<0)
     {
     	echo "<script>alert('Recheck Password Entered')</script>";
-    	echo "<script>window.open('register.php','_self')</script>";
+    	echo "<script>window.open('register-form.php','_self')</script>";
     	exit(0);
 
     }

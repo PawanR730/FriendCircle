@@ -55,7 +55,7 @@ if(!isset($_SESSION['user_email'])){
 					<td style="font-weight: bold;">Password</td>
 					<td>
 						<input class =" form-control" type="password" name="u_pass" id="mypass" required value="<?php echo $password; ?>">
-						<input type="checkbox" onclick="show_password()"><strong>Show Password</strong>
+						<!-- <input type="checkbox" onclick="show_password()"><strong>Show Password</strong> -->
 					</td>   
 				</tr>
 				<tr>
@@ -117,6 +117,7 @@ if(!isset($_SESSION['user_email'])){
 	$u_country = htmlentities($_POST['u_country']); 
 	$u_gender=htmlentities($_POST['u_gender']);
 	$u_birthday = htmlentities($_POST['u_birthday']);
+	$u_pass=md5($u_pass);
 
 	$update = "update Usertable set first_name='$f_name', last_name='$l_name', description='$describe_user', relationship='$Relationship',
 	password='$u_pass',email='$u_email',country='$u_country', gender='$u_gender' , birth_date='$u_birthday' where user_id='$user_id';";

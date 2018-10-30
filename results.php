@@ -20,7 +20,7 @@ if(!isset($_SESSION['user_email'])){
 <div class="row">
 	<div id="insert_post" class="col-sm-12">
 		<center>
-		<form action="home.php?user_id=<?php echo $user_id; ?>" method="post" id="f" enctype="multipart/form-data">  <!-- // passing variables -->
+		<form action="results.php?user_id=<?php echo $user_id; ?>" method="post" id="f" enctype="multipart/form-data">  <!-- // passing variables -->
 		<textarea class="form-control" id="content" rows="4" name="content" placeholder="What's in your mind?"></textarea><br>
 		<label class="btn btn-warning" id="upload_image_button">Select Image
 		<input type="file" name="upload_image" size="30">
@@ -34,7 +34,7 @@ if(!isset($_SESSION['user_email'])){
 <div class="row">
 	<div class="col-sm-12">
 		<center><h2><strong>News Feed</strong></h2><br></center>
-		<?php echo get_posts(); ?>
+		<?php echo results(); ?>
 	</div>
 </div>
 </body>

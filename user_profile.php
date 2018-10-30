@@ -103,7 +103,7 @@ if(!isset($_SESSION['user_email'])){
 				$userown_id = $row['user_id'];
 
 				if($user_id == $userown_id){
-					echo"<a href='edit_profile.php?user_id=$userown_id' class='btn btn-success'/>Edit Profile</a><br><br><br>";
+					echo"<a href='edit-profile.php?user_id=$userown_id' class='btn btn-success'/>Edit Profile</a><br><br><br>";
 				}
 				echo"
 					</div>
@@ -161,7 +161,7 @@ if(!isset($_SESSION['user_email'])){
 							</div>
 							<div class='row'> 
 								<div class='col-sm-12'> 
-									<img id='posts-img' src=' imagepost/$upload_image' style='height: 200px ;'> 
+									<img id='posts-img' src=' imagepost/$upload_image' style='height:300px ;'> 
 									</div> 
 								</div><br> 
 								<a href='single.php?post_id=$post_id' style='float: right;'><button class='btn btn-success'>View</ button></a> 
@@ -188,7 +188,7 @@ if(!isset($_SESSION['user_email'])){
 						<div class='row'> 
 							<div class='col-sm-12'> 
 								<p>$content</p>
-								<img id='posts-img' src='imagepost/$upload_image' >
+								<img id='posts-img' src='imagepost/$upload_image' style='height:300px ;' >
 
 							</div>
 						</div><br>

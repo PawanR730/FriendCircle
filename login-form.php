@@ -66,7 +66,7 @@
 						<input type="password" name="password" placeholder="Password" required="required" class="form-control input-md"><br>
 						<a style="text-decoration:none;float: right;color: #187FAB;" data-toggle="tooltip" title="Reset Password" href="forgot_password.php">Forgot?</a>
 					</div>
-					<a style="text-decoration: none;float: right;color: #187FAB;" data-toggle="tooltip" title="Create Account!" href="register.php">Don't have an account?</a><br><br>
+					<a style="text-decoration: none;float: right;color: #187FAB;" data-toggle="tooltip" title="Create Account!" href="register-form.php">Don't have an account?</a><br><br>
 
 					<center><button id="signin" class="btn btn-info btn-lg" name="login">Login</button></center>
 					

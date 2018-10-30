@@ -62,9 +62,7 @@ include("/opt/lampp/htdocs/FriendCircle/functions/functions.php");
 						<li class='dropdown'>
 							<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><span><i class='glyphicon glyphicon-chevron-down'></i></span></a>
 							<ul class='dropdown-menu'>
-								<li>
-									<a href='my_post.php?user_id=$user_id'>My Posts <span class='badge badge-secondary'>$posts</span></a>
-								</li>
+								
 								<li>
 									<a href='edit-profile.php?user_id=$user_id'>Edit Account</a>
 								</li>
