@@ -2,7 +2,7 @@
 
    session_start();
 include("functions/functions.php");
-  $con = mysqli_connect("localhost","root","","friendcircle") or die("Connection was not established");
+  $con = mysqli_connect("localhost","root","","social_media") or die("Connection was not established");
   $user1_id=$_GET['user_id'];
 
    $email = $_SESSION['user_email']; ///getting the user from the session variable

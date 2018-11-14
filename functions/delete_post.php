@@ -2,7 +2,7 @@
 
 session_start();
 
-$con = mysqli_connect("localhost","root","","friendcircle") or die("Connection was not established");
+$con = mysqli_connect("localhost","root","","social_media") or die("Connection was not established");
 $email = $_SESSION['user_email'];
 		$get_user = "select * from Usertable where email='$email'";
 		$run_user = mysqli_query($con,$get_user);

@@ -24,9 +24,9 @@ include("/opt/lampp/htdocs/FriendCircle/functions/functions.php");
 			// $row=mysqli_fetch_array($run_user);
 
 			$email = $_SESSION['user_email'];
-		$get_user = "select * from Usertable where email='$email'";  // Running query by emailid
-		$run_user = mysqli_query($con,$get_user);
-		$row = mysqli_fetch_array($run_user);
+			$get_user = "select * from Usertable where email='$email'";  // Running query by emailid
+			$run_user = mysqli_query($con,$get_user);
+			$row = mysqli_fetch_array($run_user);
 					
 			$user_id = $row['user_id']; 
 			$fname = $row['first_name'];
@@ -53,7 +53,8 @@ include("/opt/lampp/htdocs/FriendCircle/functions/functions.php");
 	       	<li><a href="home.php">Home</a></li>
 			<li><a href="members.php">Find People</a></li>
 			<li><a href="messages.php?user_id=new">Messages</a></li>   
-			<li><a href="requests.php">Friend Requests</a></li>      
+			<li><a href="requests.php">Friend Requests</a></li>  
+			<li><a href="groups.php?group_id=new">Groups</a></li>    
 
 <!-- //hxhhhx -->
 					<?php

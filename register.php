@@ -63,15 +63,6 @@ if(isset($_POST['register']))
 			echo "<script>window.open('register-form.php', '_self')</script>";
 			exit(0);
 		}
-
-
-
-  
-
-     
-
-
-
 }
 
 ?>

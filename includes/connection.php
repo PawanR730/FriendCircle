@@ -1,5 +1,5 @@
 <?php
-$con=mysqli_connect('localhost','root','','friendcircle');
+$con=mysqli_connect('localhost','root','','social_media');
 /*
 if(mysqli_connect_errno())
 {
